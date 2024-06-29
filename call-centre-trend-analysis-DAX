@@ -1,4 +1,6 @@
 ```dax
+
+// Average Measures
 // Average Calls Per Day: Calculates the average number of calls per day based on total calls.
 Average Calls Per Day = 
 AVERAGEX(
@@ -23,6 +25,7 @@ AVGSatisfactionRating =
         CallCenterData[Satisfaction rating]
     )
 
+// Percentage Measures
 // PercentAbandonedCalls: Calculates the percentage of calls that were abandoned.
 PercentAbandonedCalls = 
     VAR AnsweredCalls = CALCULATE(COUNTROWS(CallCenterData), CallCenterData[Answered (Y/N)] = "N")
@@ -51,12 +54,14 @@ PercentUnresolvedCalls =
     RETURN
         DIVIDE(UnresolvedCalls, TotalCalls, 0)
 
+// Goal and Target Measures
 // Satisfaction Score Goal: Target goal for satisfaction score.
 Satisfaction Score Goal = 5.00
 
 // Satisfaction Score Target: Target satisfaction score.
 Satisfaction Score Target = 4.50
 
+// Total Measures
 // Total Calls: Counts the total number of distinct calls.
 Total Calls = 
 DISTINCTCOUNT(
