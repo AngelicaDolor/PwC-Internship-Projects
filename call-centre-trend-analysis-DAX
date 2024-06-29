@@ -1,0 +1,92 @@
+```dax
+// Average Calls Per Day: Calculates the average number of calls per day based on total calls.
+Average Calls Per Day = 
+AVERAGEX(
+    VALUES(CallCenterData[Date]),
+    [Total Calls]
+)
+
+// Average Calls Per Hour: Computes the average number of calls per hour across all time periods.
+Average Calls Per Hour = 
+AVERAGEX(
+    VALUES(CallCenterData[Time]),
+    [Total Calls]
+)
+
+// AVGSatisfactionRating: Computes the average satisfaction rating excluding blank entries.
+AVGSatisfactionRating = 
+    AVERAGEX(
+        FILTER(
+            CallCenterData,
+            NOT(ISBLANK(CallCenterData[Satisfaction rating]))
+        ),
+        CallCenterData[Satisfaction rating]
+    )
+
+// PercentAbandonedCalls: Calculates the percentage of calls that were abandoned.
+PercentAbandonedCalls = 
+    VAR AnsweredCalls = CALCULATE(COUNTROWS(CallCenterData), CallCenterData[Answered (Y/N)] = "N")
+    VAR TotalCalls = COUNTROWS(CallCenterData)
+    RETURN
+        DIVIDE(AnsweredCalls, TotalCalls, 0)
+
+// PercentAnsweredCalls: Calculates the percentage of calls that were answered.
+PercentAnsweredCalls = 
+    VAR AnsweredCalls = CALCULATE(COUNTROWS(CallCenterData), CallCenterData[Answered (Y/N)] = "Y")
+    VAR TotalCalls = COUNTROWS(CallCenterData)
+    RETURN
+        DIVIDE(AnsweredCalls, TotalCalls, 0)
+
+// PercentResolvedCalls: Calculates the percentage of calls that were marked as resolved.
+PercentResolvedCalls = 
+    VAR ResolvedCalls = CALCULATE(COUNTROWS(CallCenterData), CallCenterData[Resolved] = "Y")
+    VAR TotalCalls = COUNTROWS(CallCenterData)
+    RETURN
+        DIVIDE(ResolvedCalls, TotalCalls, 0)
+
+// PercentUnresolvedCalls: Calculates the percentage of calls that were unresolved.
+PercentUnresolvedCalls = 
+    VAR UnresolvedCalls = CALCULATE(COUNTROWS(CallCenterData), CallCenterData[Resolved] = "N")
+    VAR TotalCalls = COUNTROWS(CallCenterData)
+    RETURN
+        DIVIDE(UnresolvedCalls, TotalCalls, 0)
+
+// Satisfaction Score Goal: Target goal for satisfaction score.
+Satisfaction Score Goal = 5.00
+
+// Satisfaction Score Target: Target satisfaction score.
+Satisfaction Score Target = 4.50
+
+// Total Calls: Counts the total number of distinct calls.
+Total Calls = 
+DISTINCTCOUNT(
+    CallCenterData[Call Id]
+)
+
+// Total Calls Answered: Counts the total number of distinct calls that were answered.
+Total Calls Answered = 
+CALCULATE(
+    'Calculated Measures'[Total Calls],
+    CallCenterData[Answered (Y/N)] = "Y"
+)
+
+// Total Calls Not Answered: Counts the total number of distinct calls that were not answered.
+Total Calls Not Answered = 
+CALCULATE(
+    'Calculated Measures'[Total Calls],
+    CallCenterData[Answered (Y/N)] = "N"
+)
+
+// Total Calls Resolved: Counts the total number of distinct calls that were marked as resolved.
+Total Calls Resolved = 
+CALCULATE(
+    'Calculated Measures'[Total Calls],
+    CallCenterData[Resolved] = "Y"
+)
+
+// Total Number of Agents: Counts the total number of distinct agents.
+Total Number of Agents = 
+DISTINCTCOUNT(
+    CallCenterData[Agent]
+)
+```
