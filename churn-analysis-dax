@@ -1,0 +1,144 @@
+```dax
+% Device Protection Churn = DIVIDE(CALCULATE(
+    COUNT('01 Churn-Dataset'[DeviceProtection]), '01 Churn-Dataset'[DeviceProtection] = "Yes", '01 Churn-Dataset'[Churn] = "Yes"),
+        CALCULATE(COUNT('01 Churn-Dataset'[DeviceProtection]), '01 Churn-Dataset'[Churn] = "Yes"), 0)
+
+% Online Backup Churn = DIVIDE(CALCULATE(
+    COUNT('01 Churn-Dataset'[OnlineBackup]), '01 Churn-Dataset'[OnlineBackup] = "Yes", '01 Churn-Dataset'[Churn] = "Yes"),
+        CALCULATE(COUNT('01 Churn-Dataset'[OnlineBackup]), '01 Churn-Dataset'[Churn] = "Yes"), 0)
+
+% Online Security Churn = DIVIDE(CALCULATE(
+    COUNT('01 Churn-Dataset'[OnlineSecurity]), '01 Churn-Dataset'[OnlineSecurity] = "Yes", '01 Churn-Dataset'[Churn] = "Yes"),
+        CALCULATE(COUNT('01 Churn-Dataset'[OnlineSecurity]), '01 Churn-Dataset'[Churn] = "Yes"), 0)
+
+% Phone Service Churn = DIVIDE(CALCULATE(
+    COUNT('01 Churn-Dataset'[PhoneService]), '01 Churn-Dataset'[PhoneService] = "Yes", '01 Churn-Dataset'[Churn] = "Yes"),
+        CALCULATE(COUNT('01 Churn-Dataset'[PhoneService]), '01 Churn-Dataset'[Churn] = "Yes"), 0)
+
+% Streaming Movies Churn = DIVIDE(CALCULATE(
+    COUNT('01 Churn-Dataset'[StreamingMovies]), '01 Churn-Dataset'[StreamingMovies] = "Yes", '01 Churn-Dataset'[Churn] = "Yes"),
+        CALCULATE(COUNT('01 Churn-Dataset'[StreamingMovies]), '01 Churn-Dataset'[Churn] = "Yes"), 0)
+
+% Streaming TV Churn = DIVIDE(CALCULATE(
+    COUNT('01 Churn-Dataset'[StreamingTV]), '01 Churn-Dataset'[StreamingTV] = "Yes", '01 Churn-Dataset'[Churn] = "Yes"),
+        CALCULATE(COUNT('01 Churn-Dataset'[StreamingTV]), '01 Churn-Dataset'[Churn] = "Yes"), 0)
+
+% Tech Support Churn = DIVIDE(CALCULATE(
+    COUNT('01 Churn-Dataset'[TechSupport]), '01 Churn-Dataset'[TechSupport] = "Yes", '01 Churn-Dataset'[Churn] = "Yes"),
+        CALCULATE(COUNT('01 Churn-Dataset'[TechSupport]), '01 Churn-Dataset'[Churn] = "Yes"), 0)
+
+AVG Revenue from Churned = 
+    AVERAGEX(
+        FILTER('01 Churn-Dataset', '01 Churn-Dataset'[Churn] = "Yes"),
+        '01 Churn-Dataset'[TotalCharges]
+    )
+
+AVG Revenue from Churned (MMR) = 
+    AVERAGEX(
+        FILTER('01 Churn-Dataset', '01 Churn-Dataset'[Churn] = "Yes"),
+        '01 Churn-Dataset'[MonthlyCharges]
+    )
+
+Avg Tenure = 
+    AVERAGE('01 Churn-Dataset'[tenure])
+
+Churn Rate = DIVIDE([Number of Churned Customers], [Total Number of Customers])
+
+Dependent Churn = DIVIDE(CALCULATE(
+    COUNT('01 Churn-Dataset'[Dependents]), '01 Churn-Dataset'[Dependents] = "Yes", '01 Churn-Dataset'[Churn] = "Yes"),
+        CALCULATE(COUNT('01 Churn-Dataset'[Dependents]), '01 Churn-Dataset'[Churn] = "Yes"), 0)
+
+Multiple lines no in % = DIVIDE(CALCULATE(COUNT('01 Churn-Dataset'[MultipleLines]), '01 Churn-Dataset'[MultipleLines]="No",'01 Churn-Dataset'[Churn]="Yes"),CALCULATE(COUNT('01 Churn-Dataset'[MultipleLines]),'01 Churn-Dataset'[Churn]="Yes", '01 Churn-Dataset'[MultipleLines] <> "No phone service"),0)
+
+Multiple Lines yes in % = DIVIDE(CALCULATE(COUNT('01 Churn-Dataset'[MultipleLines]), '01 Churn-Dataset'[MultipleLines]="Yes", '01 Churn-Dataset'[Churn]= "Yes"), CALCULATE(COUNT('01 Churn-Dataset'[MultipleLines]), '01 Churn-Dataset'[Churn]="Yes", '01 Churn-Dataset'[MultipleLines] <> "No phone service"),0)
+
+Number of Active Customers = 
+    CALCULATE(
+        COUNT('01 Churn-Dataset'[Churn]),
+        '01 Churn-Dataset'[Churn] = "No"
+    )
+
+Number of Churned Customers = 
+    CALCULATE(
+        COUNT('01 Churn-Dataset'[Churn]),
+        '01 Churn-Dataset'[Churn] = "Yes"
+    )
+
+Paperless Billing Churn = DIVIDE(CALCULATE(
+    COUNT('01 Churn-Dataset'[PaperlessBilling]), '01 Churn-Dataset'[PaperlessBilling] = "Yes", '01 Churn-Dataset'[Churn] = "Yes"),
+        CALCULATE(COUNT('01 Churn-Dataset'[PaperlessBilling]), '01 Churn-Dataset'[Churn] = "Yes"), 0)
+
+Partner Churn = DIVIDE(CALCULATE(
+    COUNT('01 Churn-Dataset'[Partner]), '01 Churn-Dataset'[Partner] = "Yes", '01 Churn-Dataset'[Churn] = "Yes"),
+        CALCULATE(COUNT('01 Churn-Dataset'[Partner]), '01 Churn-Dataset'[Churn] = "Yes"), 0)
+
+Revenue from Active = 
+    SUMX(
+        FILTER('01 Churn-Dataset', '01 Churn-Dataset'[Churn] = "No"),
+        '01 Churn-Dataset'[TotalCharges]
+    )
+
+Revenue from Active (MMR) = 
+    SUMX(
+        FILTER('01 Churn-Dataset', '01 Churn-Dataset'[Churn] = "No"),
+        '01 Churn-Dataset'[MonthlyCharges]
+    )
+
+Revenue from Churned = 
+    SUMX(
+        FILTER('01 Churn-Dataset', '01 Churn-Dataset'[Churn] = "Yes"),
+        '01 Churn-Dataset'[TotalCharges]
+    )
+
+Revenue from Churned (MMR) = 
+    SUMX(
+        FILTER('01 Churn-Dataset', '01 Churn-Dataset'[Churn] = "Yes"),
+        '01 Churn-Dataset'[MonthlyCharges]
+    )
+
+Senior Citizen Churn = DIVIDE(CALCULATE(
+    COUNT('01 Churn-Dataset'[SeniorCitizen]), '01 Churn-Dataset'[SeniorCitizen] = 1, '01 Churn-Dataset'[Churn] = "Yes"),
+        CALCULATE(COUNT('01 Churn-Dataset'[SeniorCitizen]), '01 Churn-Dataset'[Churn] = "Yes"), 0)
+
+SumAdminTickets = SUM('01 Churn-Dataset'[numAdminTickets])
+
+SumAdminTickets_Churned = 
+CALCULATE(
+    SUM('01 Churn-Dataset'[numAdminTickets]),
+    '01 Churn-Dataset'[Churn]= "Yes"
+)
+
+SumTechTickets = SUM('01 Churn-Dataset'[numTechTickets])
+
+SumTechTickets_Churned = 
+CALCULATE(
+    SUM('01 Churn-Dataset'[numTechTickets]),
+    '01 Churn-Dataset'[Churn]= "Yes"
+)
+
+Tenure Group = 
+    IF('01 Churn-Dataset'[tenure] <= 12,
+        "0-1 Year",
+        IF('01 Churn-Dataset'[tenure] <= 24,
+            "1-2 Years",
+            IF('01 Churn-Dataset'[tenure] <= 36,
+                "2-3 Years",
+                IF('01 Churn-Dataset'[tenure] <= 48,
+                    "3-4 Years",
+                    IF('01 Churn-Dataset'[tenure] <= 60,
+                        "4-5 Years", "5+ Years"
+                    )))))
+
+
+Total MRR = 
+    SUMX('01 Churn-Dataset', '01 Churn-Dataset'[MonthlyCharges])
+
+Total Number of Customers = 
+    COUNTX('01 Churn-Dataset',
+    '01 Churn-Dataset'[customerID])
+
+Total Number of Unique Customers = 
+    DISTINCTCOUNT('01 Churn-Dataset'[customerID])
+
+Total Revenue = 
+    SUMX('01 Churn-Dataset', '01 Churn-Dataset'[TotalCharges])
