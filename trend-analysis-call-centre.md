@@ -42,6 +42,8 @@ This dashboard provides an overview of the call center's performance for Q1 2021
 ## Data Structure & Initial Checks
 The database analyzed contained **5,000 records** representing customer calls from January to March 2021. The data was pre-processed and validated before loading into Power BI for further analysis. Download Power BI Report [here](https://github.com/AngelicaDolor/PwC-Internship-Projects/blob/main/PWC_CallCentreAnalysis.pbix).
 
+The DAX queries used to inspect and clean the data for this analysis can be found [here](https://github.com/AngelicaDolor/PwC-Internship-Projects/blob/main/call-centre-trend-analysis-DAX).
+
 ## Recommendations
 
 Based on the findings above, the following recommendations can be made:
